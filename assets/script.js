@@ -16,45 +16,48 @@
 
 // Write JavaScript code to save the user's initials and score when the game is over.
 
-var timer = document.getElementById("timer");
-var question = document.getElementById("question");
-var choices = document.getElementById("choices");
-var submitBtn = document.getElementById("submit");
+const timer = document.getElementById("timer");
+const question = document.getElementById("question");
+const answers = document.getElementById("answers");
+const submitBtn = document.getElementById("submit");
 
-var questions = [
+const questions = [
   {
     question: "What does CSS stand for?",
-    choices: [
+    answers: [
       "Colorful Style Sheets",
       "Creative Style Sheets",
       "Cascading Style Sheets",
       "Computer Style Sheets",
     ],
-    answer: 2,
+    correctAnswer: 2,
   },
 
   {
     question: "Which keyword do we need to define a function?",
-    choices: ["function", "method", "onclick", "functionName()"],
-    answer: 0,
+    answers: ["function", "method", "onclick", "functionName()"],
+    correctAnswer: 0,
   },
 
   {
     question: "What language is used to create the content of a webpage?",
-    choices: ["HTML", "CSS", "Javascript", "repl.it"],
-    answer: 0,
+    answers: ["HTML", "CSS", "Javascript", "repl.it"],
+    correctAnswer: 0,
   },
 
   {
     question: "What language is used to style a webpage?",
-    choices: ["HTML", "CSS", "Javascript", "repl.it"],
-    answer: 1,
+    answers: ["HTML", "CSS", "Javascript", "repl.it"],
+    correctAnswer: 1,
   },
 
   {
     question:
       "What language is used to add interactivity and effects to a webpage?",
-    choices: ["HTML", "CSS", "Javascript", "Python"],
-    answer: 2,
+    answers: ["HTML", "CSS", "Javascript", "Python"],
+    correctAnswer: 2,
   },
 ];
+
+submitBtn.addEventListener("click", submitAnswer);
+startTimer();
