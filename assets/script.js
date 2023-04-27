@@ -23,6 +23,7 @@ const startContainer = document.getElementById("start-container");
 const questionHeader = document.getElementById("question");
 const answersContainer = document.getElementById("answers");
 const startBtn = document.getElementById("start-btn");
+let chosenAnswer;
 
 let currentIndex = 0;
 
@@ -44,32 +45,39 @@ const questions = [
     correctAnswer: 0,
   },
 
-  // {
-  //   question: "What language is used to create the content of a webpage?",
-  //   answers: ["HTML", "CSS", "Javascript", "repl.it"],
-  //   correctAnswer: 0,
-  // },
+  {
+    question: "What language is used to create the content of a webpage?",
+    answers: ["HTML", "CSS", "Javascript", "repl.it"],
+    correctAnswer: 0,
+  },
 
-  // {
-  //   question: "What language is used to style a webpage?",
-  //   answers: ["HTML", "CSS", "Javascript", "repl.it"],
-  //   correctAnswer: 1,
-  // },
+  {
+    question: "What language is used to style a webpage?",
+    answers: ["HTML", "CSS", "Javascript", "repl.it"],
+    correctAnswer: 1,
+  },
 
-  // {
-  //   question:
-  //     "What language is used to add interactivity and effects to a webpage?",
-  //   answers: ["HTML", "CSS", "Javascript", "Python"],
-  //   correctAnswer: 2,
-  // },
+  {
+    question:
+      "What language is used to add interactivity and effects to a webpage?",
+    answers: ["HTML", "CSS", "Javascript", "Python"],
+    correctAnswer: 2,
+  },
 ];
 
 function renderNextQuestion() {
   console.log("correct");
   questionHeader.innerHTML = "";
   answersContainer.innerHTML = "";
+
   currentIndex++;
-  renderQuestion(currentIndex);
+
+  if (currentIndex < questions.length) {
+    renderQuestion(currentIndex);
+  } else {
+    console.log("Game Over");
+    gameOver();
+  }
 }
 
 function renderButtonsAndHandleAnswer(answerArray, correctAnswer) {
@@ -80,7 +88,7 @@ function renderButtonsAndHandleAnswer(answerArray, correctAnswer) {
     answerBtn.setAttribute("data-index", i);
     answerBtn.addEventListener("click", function (event) {
       //it is going to check if the data attribute from the element matches the correctAnswer value
-      const chosenAnswer = Number(event.target.getAttribute("data-index"));
+      chosenAnswer = Number(event.target.getAttribute("data-index"));
 
       if (chosenAnswer === correctAnswer) {
         renderNextQuestion();
@@ -93,18 +101,35 @@ function renderButtonsAndHandleAnswer(answerArray, correctAnswer) {
   }
 }
 
-function renderQuestion(currentIndex) {
-  questionHeader.innerText = questions[currentIndex].question;
+function renderQuestion(currIndx) {
+  questionHeader.innerText = questions[currIndx].question;
   renderButtonsAndHandleAnswer(
-    questions[currentIndex].answers,
-    questions[currentIndex].correctAnswer
+    questions[currIndx].answers,
+    questions[currIndx].correctAnswer
   );
 }
 
 function submitAnswer() {
-  console.log("hit");
-  startContainer.innerHTML = "";
+  startContainer.remove();
   renderQuestion(currentIndex);
+  clock();
+  console.log(clock());
+}
+
+function gameOver() {
+  document.querySelector("h1").innerHTML = "GAME OVER";
+}
+function clock() {
+  // start the timer when the get started btn is clicked. counts down from 60 seconds. wrong answer subtracts 10 seconds. 0 seconds = Game Over.
+  let timer = 60;
+  let countDown = setInterval(() => {
+    if (chosenAnswer !== questions[currIndx].correctAnswer) {
+      timer - 10;
+      console.log("hehehehehe");
+    } else if (timer === 0) {
+      gameOver();
+    }
+  }, 1000);
 }
 
 startBtn.addEventListener("click", submitAnswer);
