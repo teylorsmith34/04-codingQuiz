@@ -12,3 +12,9 @@ main {
 button {
   font-family: "Play", sans-serif;
 }
+
+#question {
+  font-size: xx-large;
+  color: #167347;
+  padding: 1em
+}

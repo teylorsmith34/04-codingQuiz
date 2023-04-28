@@ -119,14 +119,14 @@ function submitAnswer() {
 function gameOver() {
   document.querySelector("h1").innerHTML = "GAME OVER";
 }
+// start the timer when the get started btn is clicked. counts down from 60 seconds. wrong answer subtracts 10 seconds. 0 seconds = Game Over.
+
 function clock() {
-  // start the timer when the get started btn is clicked. counts down from 60 seconds. wrong answer subtracts 10 seconds. 0 seconds = Game Over.
   let timer = 60;
   let countDown = setInterval(() => {
     if (chosenAnswer !== questions[currIndx].correctAnswer) {
-      timer - 10;
-      console.log("hehehehehe");
-    } else if (timer === 0) {
+      timer -= 10;
+    } else if (timer < 0) {
       gameOver();
     }
   }, 1000);
