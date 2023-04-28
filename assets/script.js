@@ -83,17 +83,22 @@ function renderNextQuestion() {
 function renderButtonsAndHandleAnswer(answerArray, correctAnswer) {
   // create answer buttons
   for (let i = 0; i < answerArray.length; i++) {
-    const answerBtn = document.createElement("button");
+    var answerBtn = document.createElement("button");
     answerBtn.innerText = answerArray[i];
     answerBtn.setAttribute("data-index", i);
     answerBtn.addEventListener("click", function (event) {
       //it is going to check if the data attribute from the element matches the correctAnswer value
       chosenAnswer = Number(event.target.getAttribute("data-index"));
+      if (chosenAnswer !== questions[currentIndex].correctAnswer) {
+        time -= 10;
+      } else if (time < 0) {
+        function gameOver() {
+          document.querySelector("h1").innerHTML = "GAME OVER";
+        }
+      }
 
       if (chosenAnswer === correctAnswer) {
         renderNextQuestion();
-      } else {
-        console.log("wrong");
       }
     });
 
@@ -101,11 +106,11 @@ function renderButtonsAndHandleAnswer(answerArray, correctAnswer) {
   }
 }
 
-function renderQuestion(currIndx) {
-  questionHeader.innerText = questions[currIndx].question;
+function renderQuestion() {
+  questionHeader.innerText = questions[currentIndex].question;
   renderButtonsAndHandleAnswer(
-    questions[currIndx].answers,
-    questions[currIndx].correctAnswer
+    questions[currentIndex].answers,
+    questions[currentIndex].correctAnswer
   );
 }
 
@@ -120,15 +125,11 @@ function gameOver() {
   document.querySelector("h1").innerHTML = "GAME OVER";
 }
 // start the timer when the get started btn is clicked. counts down from 60 seconds. wrong answer subtracts 10 seconds. 0 seconds = Game Over.
-
+var time = 60;
 function clock() {
-  let timer = 60;
   let countDown = setInterval(() => {
-    if (chosenAnswer !== questions[currIndx].correctAnswer) {
-      timer -= 10;
-    } else if (timer < 0) {
-      gameOver();
-    }
+    timer.textContent = time;
+    time--;
   }, 1000);
 }
 
