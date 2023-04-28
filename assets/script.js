@@ -93,7 +93,7 @@ function renderButtonsAndHandleAnswer(answerArray, correctAnswer) {
         time -= 10;
       } else if (time < 0) {
         function gameOver() {
-          document.querySelector("h1").innerHTML = "GAME OVER";
+          document.querySelector("main").innerHTML = "GAME OVER";
         }
       }
 
@@ -122,7 +122,7 @@ function submitAnswer() {
 }
 
 function gameOver() {
-  document.querySelector("h1").innerHTML = "GAME OVER";
+  document.querySelector("main").innerHTML = "GAME OVER";
 }
 // start the timer when the get started btn is clicked. counts down from 60 seconds. wrong answer subtracts 10 seconds. 0 seconds = Game Over.
 var time = 60;
@@ -130,6 +130,10 @@ function clock() {
   let countDown = setInterval(() => {
     timer.textContent = time;
     time--;
+    if (time <= 0) {
+      gameOver();
+      clearInterval(countDown);
+    }
   }, 1000);
 }
 
